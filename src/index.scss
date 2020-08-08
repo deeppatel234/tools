@@ -1,0 +1,57 @@
+*,
+::after,
+::before {
+  box-sizing: border-box;
+}
+
+:root {
+  --main-bg-color: #222831;
+  --header-bg-color: #393e46;
+  --sidebar-bg-color: rgba(0, 0, 0, 0.2);
+  --view-bg-color: rgba(0, 0, 0, 0.4);
+  --view-sub-bg-color: rgba(0,0,0,0.2);
+  --border-color: rgba(255, 255, 255, 0.1);
+  --border-hover-color: rgba(255, 255, 255, 0.3);
+  --dark-color: #000;
+  --light-color: #fff;
+  --font-color: #fff;
+  --disabled-font-color: rgba(255, 255, 255, 0.3);
+  --primary-color: #00adb5;
+  --hover-color: rgba(255, 255, 255, 0.1);
+  --scroll-bg-color: rgba(255,255,255, 0.2);
+  --scroll-thumb-color: rgba(255,255,255, 0.3);
+
+  font-size: 16px;
+}
+
+*::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+  background-color: var(--scroll-bg-color);
+}
+
+*::-webkit-scrollbar-thumb {
+  border-radius: 8px;
+  background-color: var(--scroll-thumb-color);
+}
+
+body {
+  font-family: 'Montserrat', sans-serif;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+  margin: 0;
+}
+
+#root {
+  display: flex;
+  background-color: var(--main-bg-color);
+  color: var(--font-color);
+}
+
+section.app {
+  flex: 1;
+}
