@@ -10,6 +10,7 @@ import { ToastProvider } from 'react-toast-notifications';
 import AppContext from "./AppContext";
 
 import URI from "./containers/URI";
+import JSON from "./containers/JSON";
 import SideBar from "./containers/SideBar";
 
 function App() {
@@ -30,6 +31,9 @@ function App() {
           <Switch>
             <Route path="/uri">
               <URI />
+            </Route>
+            <Route path="/json">
+              <JSON />
             </Route>
             <Redirect to="/uri" />
           </Switch>

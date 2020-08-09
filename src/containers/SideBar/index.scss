@@ -7,10 +7,11 @@ aside.sidebar {
   .menu-item {
     color: inherit;
     text-decoration: none;
-    padding: 1rem 1.5rem;
+    padding: 1rem;
     border-bottom: 1px solid var(--border-color);
     font-size: 1.1rem;
     font-weight: bold;
+    text-align: center;
 
     &.active {
       color: var(--primary-color);

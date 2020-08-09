@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, memo } from "react";
 import classnames from "classnames";
 import Tippy from "@tippyjs/react";
 import { useToasts } from "react-toast-notifications";
-
+import jsonlint from "jsonlint-mod";
 import { Controlled as CodeMirror } from "react-codemirror2";
 
 import "codemirror/mode/javascript/javascript";
@@ -22,6 +22,8 @@ import JsonParser from "../JSONTree/JsonParser";
 
 import "./index.scss";
 
+window.jsonlint = jsonlint;
+
 const options = {
   theme: "material-ocean",
   lineNumbers: true,
@@ -33,10 +35,20 @@ const options = {
 const jsonOptions = {
   ...options,
   mode: "application/json",
+  lint: true,
+  gutters: ["CodeMirror-lint-markers"],
+  styleActiveLine: true,
 };
 
-const Editor = ({ title, value, onValueChange, jsonEditor, ...props }) => {
-  const [jsonMode, setJsonMode] = useState(false);
+const Editor = memo(({
+  title,
+  value,
+  onValueChange,
+  jsonEditor,
+  jsonModeEnabled,
+  ...props
+}) => {
+  const [jsonMode, setJsonMode] = useState(jsonModeEnabled);
   const [jsonTreeView, setJsonTreeView] = useState(false);
 
   const { addToast } = useToasts();
@@ -81,14 +93,16 @@ const Editor = ({ title, value, onValueChange, jsonEditor, ...props }) => {
                   </Tippy>
                 </>
               ) : null}
-              <Tippy content="JSON Mode">
-                <span
-                  className={classnames("action-item", { active: jsonMode })}
-                  onClick={toggalJsonMode}
-                >
-                  JSON
-                </span>
-              </Tippy>
+              {!jsonModeEnabled ? (
+                <Tippy content="JSON Mode">
+                  <span
+                    className={classnames("action-item", { active: jsonMode })}
+                    onClick={toggalJsonMode}
+                  >
+                    JSON
+                  </span>
+                </Tippy>
+              ) : null}
             </>
           ) : null}
           <DownloadFile className="action-item" text={value} />
@@ -126,10 +140,11 @@ const Editor = ({ title, value, onValueChange, jsonEditor, ...props }) => {
       )}
     </div>
   );
-};
+});
 
 Editor.defaultProps = {
   jsonEditor: false,
+  jsonModeEnabled: false,
 };
 
 export default Editor;
