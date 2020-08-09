@@ -14,7 +14,7 @@ const URI = () => {
 
   const uriData = appData.uri || {};
 
-  const { decodedData = "", encodedData = "{%22userId%22:149,%22@class%22:%22com.sokrati.sokratiShopsSvcObjects.GetShopByUserIdRequest%22}" } = uriData;
+  const { decodedData = "", encodedData = "" } = uriData;
 
   const onChangeEncoded = (value) => {
     onChangeAppData("uri", {
