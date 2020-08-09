@@ -5,6 +5,7 @@ import {
   Route,
   Redirect,
 } from "react-router-dom";
+import { ToastProvider } from 'react-toast-notifications';
 
 import AppContext from "./AppContext";
 
@@ -24,13 +25,15 @@ function App() {
   return (
     <Router>
       <AppContext.Provider value={{ appData, onChangeAppData }}>
-        <SideBar />
-        <Switch>
-          <Route path="/uri">
-            <URI />
-          </Route>
-          <Redirect to="/uri" />
-        </Switch>
+        <ToastProvider placement="bottom-right" autoDismiss autoDismissTimeout={4000}>
+          <SideBar />
+          <Switch>
+            <Route path="/uri">
+              <URI />
+            </Route>
+            <Redirect to="/uri" />
+          </Switch>
+        </ToastProvider>
       </AppContext.Provider>
     </Router>
   );

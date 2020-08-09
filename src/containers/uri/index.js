@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 
-import Textarea from "../../components/Textarea";
+import Editor from "../../components/Editor";
 import Button from "../../components/Button";
 import ChevronLeft from "../../components/Icons/ChevronLeft";
 import ChevronRight from "../../components/Icons/ChevronRight";
@@ -41,10 +41,7 @@ const URI = () => {
   return (
     <section className="app uri-app">
       <div className="uri-section">
-        <h3>Encoded</h3>
-        <div className="input-area">
-          <Textarea value={encodedData} onChange={onChangeEncoded} />
-        </div>
+        <Editor title="Encoded" value={encodedData} onValueChange={onChangeEncoded} />
       </div>
       <div className="action-section">
         <Button onClick={onClickEncode}>
@@ -55,10 +52,7 @@ const URI = () => {
         </Button>
       </div>
       <div className="uri-section">
-        <h3>Decoded</h3>
-        <div className="input-area">
-          <Textarea value={decodedData} onChange={onChangeDecoded} />
-        </div>
+        <Editor title="Decoded" value={decodedData} onValueChange={onChangeDecoded} />
       </div>
     </section>
   );

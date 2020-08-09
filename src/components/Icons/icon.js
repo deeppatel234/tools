@@ -1,9 +1,9 @@
-import React from "react";
+import React, { forwardRef } from "react";
 import classNames from "classnames";
 
 import "./index.scss";
 
-const Icon = ({ children, className, ...props }) => {
+const Icon = forwardRef(({ children, className, ...props }, ref) => {
   return (
     <svg
       className={classNames("icon", className)}
@@ -12,10 +12,11 @@ const Icon = ({ children, className, ...props }) => {
       fill="currentColor"
       focusable="false"
       {...props}
+      ref={ref}
     >
       {children}
     </svg>
   );
-};
+});
 
 export default Icon;

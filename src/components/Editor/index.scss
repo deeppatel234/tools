@@ -1,0 +1,38 @@
+.editor-wrapper {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+
+  .editor-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: 0.5rem;
+
+    .title {
+      margin: 0;
+    }
+
+    .actions {
+      display: flex;
+      align-items: center;
+
+      svg {
+        cursor: pointer;
+        outline: none;
+      }
+    }
+  }
+
+  .react-codemirror2 {
+    flex: 1;
+    min-width: 0;
+    min-height: 0;
+
+    .CodeMirror {
+      height: 100%;
+      width: 100%;
+    }
+  }
+}
