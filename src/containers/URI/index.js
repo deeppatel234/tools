@@ -31,11 +31,11 @@ const URI = () => {
   };
 
   const onClickEncode = () => {
-    onChangeEncoded(encodeURIComponent(decodedData));
+    onChangeEncoded(encodeURIComponent(decodedData).replace(/'/g,"%27").replace(/"/g,"%22"));
   };
 
   const onClickDecode = () => {
-    onChangeDecoded(decodeURIComponent(encodedData));
+    onChangeDecoded(decodeURIComponent(encodedData).replace(/\+/g,  " "));
   };
 
   return (

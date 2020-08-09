@@ -1,5 +1,5 @@
 import React from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 
 import "./index.scss";
 
@@ -15,6 +15,14 @@ const tools = [
 ];
 
 const SideBar = () => {
+  const url = new URL(window.location.href)
+
+  const showSideBar = url.searchParams.get('full') !== "true";
+
+  if (!showSideBar) {
+    return null;
+  }
+
   return (
     <aside className="sidebar">
       {tools.map(({ label, url }) => {
