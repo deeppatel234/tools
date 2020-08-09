@@ -9,7 +9,7 @@ import { ToastProvider } from 'react-toast-notifications';
 
 import AppContext from "./AppContext";
 
-import URI from "./containers/uri";
+import URI from "./containers/URI";
 import SideBar from "./containers/SideBar";
 
 function App() {
