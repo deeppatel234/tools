@@ -14,7 +14,7 @@ const URI = () => {
 
   const uriData = appData.uri || {};
 
-  const { decodedData = "", encodedData = "" } = uriData;
+  const { decodedData = "", encodedData = "{%22userId%22:149,%22@class%22:%22com.sokrati.sokratiShopsSvcObjects.GetShopByUserIdRequest%22}" } = uriData;
 
   const onChangeEncoded = (value) => {
     onChangeAppData("uri", {
@@ -52,7 +52,7 @@ const URI = () => {
         </Button>
       </div>
       <div className="uri-section">
-        <Editor title="Decoded" value={decodedData} onValueChange={onChangeDecoded} />
+        <Editor title="Decoded" value={decodedData} onValueChange={onChangeDecoded} jsonEditor/>
       </div>
     </section>
   );

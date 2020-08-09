@@ -1,0 +1,17 @@
+.tree-view {
+  height: 100%;
+
+  .react-json-view {
+    height: 100%;
+    padding: 8px;
+    overflow: auto;
+    background-color: #0f1119 !important;
+  }
+}
+
+.invalid-json-error {
+  height: 100%;
+  padding: 8px;
+  overflow: auto;
+  background-color: #0f1119 !important;
+}

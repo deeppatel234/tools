@@ -4,6 +4,7 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 import { debugContextDevtool } from 'react-context-devtool';
 
+import 'tippy.js/dist/tippy.css';
 import './index.scss';
 
 const container = document.getElementById("root");

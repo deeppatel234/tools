@@ -2,8 +2,6 @@ import React from "react";
 import { useToasts } from "react-toast-notifications";
 import Tippy from '@tippyjs/react';
 
-import 'tippy.js/dist/tippy.css';
-
 import Clipboard from "../Icons/Clipboard";
 
 const copyFallback = (text) => {
