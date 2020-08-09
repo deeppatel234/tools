@@ -4,6 +4,7 @@ import Tippy from "@tippyjs/react";
 import { useToasts } from "react-toast-notifications";
 import jsonlint from "jsonlint-mod";
 import { Controlled as CodeMirror } from "react-codemirror2";
+import beautify from 'js-beautify/js/lib/beautify';
 
 import "codemirror/mode/javascript/javascript";
 import "codemirror/lib/codemirror.css";
@@ -63,7 +64,10 @@ const Editor = memo(({
 
   const onClickBeautify = () => {
     try {
-      onValueChange(JSON.stringify(JSON.parse(value), null, 2));
+      const formated = beautify.js_beautify(value, {
+        indent_with_tabs: true
+      });
+      onValueChange(formated);
     } catch (err) {
       addToast("Invalid JSON data", { appearance: "error" });
     }
