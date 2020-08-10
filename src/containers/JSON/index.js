@@ -22,14 +22,24 @@ const JSON = () => {
 
   return (
     <section className="app json-app">
-      <Editor
-        title="JSON Editor"
-        value={text}
-        onValueChange={onChangeJson}
-        jsonEditor
-        jsonModeEnabled
-        enableJSONLint
-      />
+      {/* <div className="json-tabs">
+        <h3>Tabs</h3>
+        <div>
+          <div>
+            Abcd cxz
+          </div>
+        </div>
+      </div> */}
+      <div className="json-editor">
+        <Editor
+          title="JSON Editor"
+          value={text}
+          onValueChange={onChangeJson}
+          jsonEditor
+          jsonModeEnabled
+          enableJSONLint
+        />
+      </div>
     </section>
   );
 };

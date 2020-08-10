@@ -5,6 +5,7 @@ import { useToasts } from "react-toast-notifications";
 import jsonlint from "jsonlint-mod";
 import { Controlled as CodeMirror } from "react-codemirror2";
 import beautify from 'js-beautify/js/lib/beautify';
+import minify from 'jsonminify';
 
 import "codemirror/mode/javascript/javascript";
 import "codemirror/lib/codemirror.css";
@@ -73,10 +74,19 @@ const Editor = memo(({
     }
   };
 
+  const onClickMinify = () => {
+    try {
+      const formated = minify(value);
+      onValueChange(formated);
+    } catch (err) {
+      addToast("Invalid JSON data", { appearance: "error" });
+    }
+  }
+
   return (
     <div className="editor-wrapper">
       <div className="editor-header">
-        <h3 className="title">{title}</h3>
+        <h5 className="title">{title}</h5>
         <div className="actions">
           {jsonEditor ? (
             <>
@@ -85,6 +95,11 @@ const Editor = memo(({
                   <Tippy content="JSON Formate">
                     <span className="action-item" onClick={onClickBeautify}>
                       Beautify
+                    </span>
+                  </Tippy>
+                  <Tippy content="JSON Minify">
+                    <span className="action-item" onClick={onClickMinify}>
+                      Minify
                     </span>
                   </Tippy>
                   <Tippy content="JSON Tree View">
@@ -110,7 +125,7 @@ const Editor = memo(({
             </>
           ) : null}
           <DownloadFile className="action-item" text={value} />
-          <CopyToClipBoard text={value} />
+          <CopyToClipBoard className="action-item" text={value} />
         </div>
       </div>
       {jsonMode ? (

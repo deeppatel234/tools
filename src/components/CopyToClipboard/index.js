@@ -51,7 +51,7 @@ export const copyToClipboardText = async (text) => {
   return copied;
 };
 
-const CopyToClipBoard = ({ text }) => {
+const CopyToClipBoard = ({ text, className }) => {
   const { addToast } = useToasts();
 
   const onClickCopy = async (event) => {
@@ -69,7 +69,7 @@ const CopyToClipBoard = ({ text }) => {
 
   return (
     <Tippy content="Copy">
-      <Clipboard onClick={onClickCopy} />
+      <Clipboard className={className} onClick={onClickCopy} />
     </Tippy>
   );
 };
