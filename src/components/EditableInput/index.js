@@ -8,7 +8,7 @@ import Check from "../Icons/Check";
 import "./index.scss";
 
 const EditableInput = ({ value, onChange }) => {
-  const [editMode, setEditMode] = useState(true);
+  const [editMode, setEditMode] = useState(false);
   const [inputValue, setInputValue] = useState(value);
 
   useEffect(() => {

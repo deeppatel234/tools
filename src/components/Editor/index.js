@@ -49,6 +49,8 @@ const Editor = memo(({
   onValueChange,
   jsonEditor,
   jsonModeEnabled,
+  headerEditable,
+  onChangeHeader,
   ...props
 }) => {
   const [jsonMode, setJsonMode] = useState(jsonModeEnabled);
@@ -88,7 +90,11 @@ const Editor = memo(({
     <div className="editor-wrapper">
       <div className="editor-header">
         <h5 className="title">
-          <EditableInput value={title} onChange={console.log} />
+          {
+            headerEditable ? (
+              <EditableInput value={title} onChange={onChangeHeader} />
+            ) : title
+          }
         </h5>
         <div className="actions">
           {jsonEditor ? (
@@ -167,6 +173,7 @@ const Editor = memo(({
 Editor.defaultProps = {
   jsonEditor: false,
   jsonModeEnabled: false,
+  headerEditable: false,
 };
 
 export default Editor;

@@ -49,6 +49,7 @@ const JSON = () => {
           jsonEditor
           jsonModeEnabled
           enableJSONLint
+          headerEditable
         />
       </div>
     </section>
