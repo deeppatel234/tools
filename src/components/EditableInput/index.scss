@@ -1,0 +1,29 @@
+.editable-input-title {
+  display: flex;
+  align-items: center;
+
+  .edit {
+    margin-left: 0.5rem;
+    cursor: pointer;
+  }
+}
+
+.editable-input {
+  display: flex;
+  align-items: center;
+
+  input {
+    background: transparent;
+    color: #fff;
+    border: none;
+    border-bottom: 1px solid rgba(255,255,255,0.7);
+    padding-bottom: 3px;
+    outline: none;
+  }
+
+  svg {
+    font-size: 1.1rem;
+    margin-left: 0.2rem;
+    cursor: pointer;
+  }
+}

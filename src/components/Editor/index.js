@@ -18,6 +18,7 @@ import "codemirror/addon/lint/lint.css";
 
 import CopyToClipBoard from "../CopyToClipboard";
 import DownloadFile from "../DownloadFile";
+import EditableInput from "../EditableInput";
 import Braces from "../Icons/Braces";
 import JSONTree from "../JSONTree";
 import JsonParser from "../JSONTree/JsonParser";
@@ -86,7 +87,9 @@ const Editor = memo(({
   return (
     <div className="editor-wrapper">
       <div className="editor-header">
-        <h5 className="title">{title}</h5>
+        <h5 className="title">
+          <EditableInput value={title} onChange={console.log} />
+        </h5>
         <div className="actions">
           {jsonEditor ? (
             <>
