@@ -1,11 +1,12 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import App from './App';
-import * as serviceWorker from './serviceWorker';
-import { debugContextDevtool } from 'react-context-devtool';
+import React from "react";
+import ReactDOM from "react-dom";
+import { debugContextDevtool } from "react-context-devtool";
 
-import 'tippy.js/dist/tippy.css';
-import './index.scss';
+import App from "./App";
+import * as serviceWorker from "./serviceWorker";
+
+import "tippy.js/dist/tippy.css";
+import "./index.scss";
 
 const container = document.getElementById("root");
 
