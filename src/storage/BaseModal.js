@@ -91,6 +91,20 @@ class BaseModal {
     });
   }
 
+  get(id) {
+    return new Promise((resolve, reject) => {
+      const request = this.getTransaction("readonly").get(id);
+
+      request.onsuccess = (event) => {
+        resolve(event.target.result);
+      };
+
+      request.onerror = () => {
+        reject();
+      };
+    });
+  }
+
   put(id, value) {
     return new Promise((resolve, reject) => {
       const cursor = this.getTransaction("readwrite");

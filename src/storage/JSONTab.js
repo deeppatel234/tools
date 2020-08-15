@@ -1,4 +1,5 @@
 import BaseModal from "./BaseModal";
+import { debounce } from "../utils";
 
 class JSONTab extends BaseModal {
   constructor(config) {
@@ -10,7 +11,9 @@ class JSONTab extends BaseModal {
       name: "title",
       keyPath: "title",
       options: {},
-    }]
+    }];
+
+    this.putDebounce = debounce(this.put.bind(this), 1000);
   }
 
   getAllTabs() {
@@ -27,6 +30,10 @@ class JSONTab extends BaseModal {
     return {
       title: "Untitled",
     };
+  }
+
+  saveAsync(id, value) {
+    this.putDebounce(id, value);
   }
 }
 

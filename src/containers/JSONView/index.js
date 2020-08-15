@@ -1,10 +1,10 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import Tippy from "@tippyjs/react";
+import classnames from "classnames";
 
 import Editor from "../../components/Editor";
 import JSONTab from "../../storage/JSONTab";
 
-import AppContext from "../../AppContext";
 import Plus from "../../components/Icons/Plus";
 import Cross from "../../components/Icons/Cross";
 import { keyBy } from "../../utils";
@@ -12,19 +12,14 @@ import { keyBy } from "../../utils";
 import "./index.scss";
 
 const JSONView = () => {
-  const { appData, onChangeAppData } = useContext(AppContext);
+  const [ jsonValue, setJsonValue ] = useState("");
   const [ tabs, setTabs ] = useState({});
   const [ selectedTabId, setSelectedTabId ] = useState(null);
-
-  const jsonData = appData.json || {};
-
-  const { text } = jsonData;
 
   const fetchData = () => {
     JSONTab.getAllTabs().then(data => {
       if (Array.isArray(data) && data.length) {
         setTabs(keyBy(data, "id"));
-        setSelectedTabId(data[0].id);
       } else {
         onClickAddTab();
       }
@@ -37,15 +32,21 @@ const JSONView = () => {
 
   useEffect(() => {
     if (!tabs[selectedTabId]) {
-      setSelectedTabId(Object.keys(tabs)[0]);
+      setSelectedTabId(parseInt(Object.keys(tabs)[0]));
     }
-  }, [tabs, selectedTabId])
+  }, [tabs, selectedTabId]);
 
-  const onChangeJson = (value) => {
-    onChangeAppData("json", {
-      ...jsonData,
-      text: value,
-    });
+  useEffect(() => {
+    if (selectedTabId) {
+      JSONTab.get(selectedTabId).then((jsonValue) => {
+        setJsonValue(jsonValue.data);
+      });
+    }
+  }, [selectedTabId]);
+
+  const onChangeJson = (value, id) => {
+    setJsonValue(value);
+    JSONTab.putDebounce(id, { data: value });
   };
 
   const onClickAddTab = () => {
@@ -79,6 +80,10 @@ const JSONView = () => {
     });
   };
 
+  const onChangeTab = id => {
+    setSelectedTabId(id);
+  };
+
   const tabList = Object.values(tabs);
 
   return (
@@ -93,7 +98,13 @@ const JSONView = () => {
         <div className="tab-list">
           {
             tabList.map(({ id, title }) => (
-              <div key={id} className="tab">
+              <div
+                key={id}
+                className={classnames("tab", {
+                  "active": selectedTabId === id,
+                })}
+                onClick={() => onChangeTab(id)}
+              >
                 <span className="tab-name">{title}</span>
                 {
                   tabList.length > 1 ? (
@@ -115,8 +126,9 @@ const JSONView = () => {
           (selectedTabId && tabs[selectedTabId]) ? (
             <Editor
               key={tabs[selectedTabId].id}
+              id={tabs[selectedTabId].id}
               title={tabs[selectedTabId].title}
-              value={text}
+              value={jsonValue}
               jsonEditor
               jsonModeEnabled
               enableJSONLint

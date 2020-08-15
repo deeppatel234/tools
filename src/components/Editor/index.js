@@ -44,6 +44,7 @@ const jsonOptions = {
 };
 
 const Editor = memo(({
+  id,
   title,
   value,
   onValueChange,
@@ -71,7 +72,7 @@ const Editor = memo(({
       const formated = beautify.js_beautify(value, {
         indent_with_tabs: true
       });
-      onValueChange(formated);
+      onValueChange(formated, id);
     } catch (err) {
       addToast("Invalid JSON data", { appearance: "error" });
     }
@@ -80,7 +81,7 @@ const Editor = memo(({
   const onClickMinify = () => {
     try {
       const formated = minify(value);
-      onValueChange(formated);
+      onValueChange(formated, id);
     } catch (err) {
       addToast("Invalid JSON data", { appearance: "error" });
     }
@@ -150,7 +151,7 @@ const Editor = memo(({
               options={jsonOptions}
               value={value}
               onBeforeChange={(editor, data, value) => {
-                onValueChange(value);
+                onValueChange(value, id);
               }}
             />
           )}
@@ -162,7 +163,7 @@ const Editor = memo(({
           options={options}
           value={value}
           onBeforeChange={(editor, data, value) => {
-            onValueChange(value);
+            onValueChange(value, id);
           }}
         />
       )}
