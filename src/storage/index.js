@@ -1,17 +1,10 @@
 import JSONTab from "./JSONTab";
 
-window.indexedDB =
+const idb =
   window.indexedDB ||
   window.mozIndexedDB ||
   window.webkitIndexedDB ||
   window.msIndexedDB;
-window.IDBTransaction = window.IDBTransaction ||
-  window.webkitIDBTransaction ||
-  window.msIDBTransaction || { READ_WRITE: "readwrite" };
-window.IDBKeyRange =
-  window.IDBKeyRange || window.webkitIDBKeyRange || window.msIDBKeyRange;
-
-const idb = window.indexedDB;
 const DB_NAME = "tools-test";
 const DB_VERSION = 1;
 
