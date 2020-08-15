@@ -20,8 +20,10 @@ const EditableInput = ({ value, onChange }) => {
   }
 
   const onDone = () => {
-    onChange(inputValue);
-    toggleEditMode();
+    if (inputValue) {
+      onChange(inputValue);
+      toggleEditMode();
+    }
   }
 
   if (editMode) {
