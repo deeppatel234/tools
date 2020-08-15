@@ -8,6 +8,7 @@ import JSONTab from "../../storage/JSONTab";
 import Plus from "../../components/Icons/Plus";
 import Cross from "../../components/Icons/Cross";
 import { keyBy } from "../../utils";
+import { isIDBSupported } from "../../storage";
 
 import "./index.scss";
 
@@ -28,17 +29,19 @@ const JSONView = () => {
   };
 
   useEffect(() => {
-    fetchData();
+    if (isIDBSupported) {
+      fetchData();
+    }
   }, []);
 
   useEffect(() => {
-    if (!tabs[selectedTabId]) {
+    if (isIDBSupported && !tabs[selectedTabId]) {
       setSelectedTabId(parseInt(Object.keys(tabs)[0]));
     }
   }, [tabs, selectedTabId]);
 
   useEffect(() => {
-    if (selectedTabId) {
+    if (isIDBSupported && selectedTabId) {
       JSONTab.get(selectedTabId).then((jsonValue) => {
         setJsonValue(jsonValue ? jsonValue.data : "");
       });
@@ -47,7 +50,9 @@ const JSONView = () => {
 
   const onChangeJson = (value, id) => {
     setJsonValue(value);
-    JSONTab.putDebounce(id, { data: value });
+    if (isIDBSupported) {
+      JSONTab.putDebounce(id, { data: value });
+    }
   };
 
   const onClickAddTab = () => {
@@ -98,6 +103,24 @@ const JSONView = () => {
     setSearch(value);
   };
 
+  if (!isIDBSupported) {
+    return (
+      <section className="app json-app">
+        <div className="json-editor">
+          <Editor
+            key={"jsonEditor"}
+            title="JSON Editor"
+            value={jsonValue}
+            jsonEditor
+            jsonModeEnabled
+            enableJSONLint
+            onValueChange={onChangeJson}
+          />
+        </div>
+      </section>
+    );
+  }
+
   const tabList = Object.values(tabs);
 
   return (
@@ -119,7 +142,10 @@ const JSONView = () => {
         </div>
         <div className="tab-list">
           {tabList.map(({ id, title }) => {
-            if (searchText && !title.toLowerCase().includes(searchText.toLowerCase())) {
+            if (
+              searchText &&
+              !title.toLowerCase().includes(searchText.toLowerCase())
+            ) {
               return null;
             }
 
