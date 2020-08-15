@@ -33,6 +33,21 @@ section.json-app {
       }
     }
 
+    .tab-search {
+      display: flex;
+      align-items: center;
+      border-bottom: 1px solid var(--border-color);
+
+      .search-input {
+        width: 100%;
+        background: transparent;
+        border: none;
+        padding: 0.5rem;
+        color: #fff;
+        outline: none;
+      }
+    }
+
     .tab-list {
       flex: 1;
       min-height: 0;
