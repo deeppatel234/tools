@@ -56,9 +56,7 @@ const JSONView = () => {
   const onChangeJson = (value, id) => {
     setJsonValue(value);
     if (isIDBSupported) {
-      JSONTab.putDebounce(id, { data: value }).catch(() => {
-        addToast("Save error", { appearance: "error" });
-      });
+      JSONTab.putDebounce(id, { data: value });
     }
   };
 
