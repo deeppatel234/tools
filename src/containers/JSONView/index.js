@@ -40,7 +40,7 @@ const JSONView = () => {
   useEffect(() => {
     if (selectedTabId) {
       JSONTab.get(selectedTabId).then((jsonValue) => {
-        setJsonValue(jsonValue.data);
+        setJsonValue(jsonValue ? jsonValue.data : "");
       });
     }
   }, [selectedTabId]);
