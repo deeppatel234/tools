@@ -1,33 +1,25 @@
-import React, { useContext } from "react";
+import React, { useState } from "react";
 
 import Editor from "../../components/Editor";
 import Button from "../../components/Button";
 import ChevronLeft from "../../components/Icons/ChevronLeft";
 import ChevronRight from "../../components/Icons/ChevronRight";
-
-import AppContext from "../../AppContext";
+import { saveLSAsync, getLS } from "../../storage/localStoarage.js";
 
 import "./index.scss";
 
 const URI = () => {
-  const { appData, onChangeAppData } = useContext(AppContext);
-
-  const uriData = appData.uri || {};
-
-  const { decodedData = "", encodedData = "" } = uriData;
+  const [decodedData, setDecodedData] = useState(() => getLS("decodedData") || "");
+  const [encodedData, setEncodedData] = useState(() => getLS("encodedData") || "");
 
   const onChangeEncoded = (value) => {
-    onChangeAppData("uri", {
-      ...uriData,
-      encodedData: value,
-    });
+    setEncodedData(value);
+    saveLSAsync('encodedData', value);
   };
 
   const onChangeDecoded = (value) => {
-    onChangeAppData("uri", {
-      ...uriData,
-      decodedData: value,
-    });
+    setDecodedData(value);
+    saveLSAsync('decodedData', value);
   };
 
   const onClickEncode = () => {
