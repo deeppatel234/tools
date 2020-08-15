@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Tippy from "@tippyjs/react";
 import classnames from "classnames";
+import { useToasts } from "react-toast-notifications";
 
 import Editor from "../../components/Editor";
 import JSONTab from "../../storage/JSONTab";
@@ -17,6 +18,8 @@ const JSONView = () => {
   const [tabs, setTabs] = useState({});
   const [selectedTabId, setSelectedTabId] = useState(null);
   const [searchText, setSearch] = useState("");
+  const [isSupported, setIsSupported] = useState(isIDBSupported);
+  const { addToast } = useToasts();
 
   const fetchData = () => {
     JSONTab.getAllTabs().then((data) => {
@@ -25,6 +28,8 @@ const JSONView = () => {
       } else {
         onClickAddTab();
       }
+    }).catch(() => {
+      setIsSupported(false);
     });
   };
 
@@ -51,7 +56,9 @@ const JSONView = () => {
   const onChangeJson = (value, id) => {
     setJsonValue(value);
     if (isIDBSupported) {
-      JSONTab.putDebounce(id, { data: value });
+      JSONTab.putDebounce(id, { data: value }).catch(() => {
+        addToast("Save error", { appearance: "error" });
+      });
     }
   };
 
@@ -61,7 +68,7 @@ const JSONView = () => {
         fetchData();
       })
       .catch((err) => {
-        console.log("error", err);
+        addToast("Something went wrong", { appearance: "error" });
       });
   };
 
@@ -77,7 +84,7 @@ const JSONView = () => {
         });
       })
       .catch((err) => {
-        console.log("error", err);
+        addToast("Something went wrong", { appearance: "error" });
       });
   };
 
@@ -91,7 +98,7 @@ const JSONView = () => {
         });
       })
       .catch((err) => {
-        console.log("error", err);
+        addToast("Something went wrong", { appearance: "error" });
       });
   };
 
@@ -103,7 +110,7 @@ const JSONView = () => {
     setSearch(value);
   };
 
-  if (!isIDBSupported) {
+  if (!isSupported) {
     return (
       <section className="app json-app">
         <div className="json-editor">
