@@ -9,31 +9,42 @@ import { saveLSAsync, getLS } from "../../storage/localStoarage.js";
 import "./index.scss";
 
 const URI = () => {
-  const [decodedData, setDecodedData] = useState(() => getLS("decodedData") || "");
-  const [encodedData, setEncodedData] = useState(() => getLS("encodedData") || "");
+  const [decodedData, setDecodedData] = useState(
+    () => getLS("decodedData") || ""
+  );
+  const [encodedData, setEncodedData] = useState(
+    () => getLS("encodedData") || ""
+  );
 
   const onChangeEncoded = (value) => {
     setEncodedData(value);
-    saveLSAsync('encodedData', value);
+    saveLSAsync("encodedData", value);
   };
 
   const onChangeDecoded = (value) => {
     setDecodedData(value);
-    saveLSAsync('decodedData', value);
+    saveLSAsync("decodedData", value);
   };
 
   const onClickEncode = () => {
-    onChangeEncoded(encodeURIComponent(decodedData).replace(/'/g,"%27").replace(/"/g,"%22"));
+    onChangeEncoded(
+      encodeURIComponent(decodedData).replace(/'/g, "%27").replace(/"/g, "%22")
+    );
   };
 
   const onClickDecode = () => {
-    onChangeDecoded(decodeURIComponent(encodedData).replace(/\+/g,  " "));
+    onChangeDecoded(decodeURIComponent(encodedData).replace(/\+/g, " "));
   };
 
   return (
     <section className="app uri-app">
       <div className="uri-section">
-        <Editor title="Encoded" value={encodedData} onValueChange={onChangeEncoded} />
+        <Editor
+          title="Encoded"
+          value={encodedData}
+          onValueChange={onChangeEncoded}
+          enableSortcuts={false}
+        />
       </div>
       <div className="action-section">
         <Button onClick={onClickEncode}>
@@ -44,7 +55,13 @@ const URI = () => {
         </Button>
       </div>
       <div className="uri-section">
-        <Editor title="Decoded" value={decodedData} onValueChange={onChangeDecoded} jsonEditor/>
+        <Editor
+          title="Decoded"
+          value={decodedData}
+          onValueChange={onChangeDecoded}
+          jsonEditor
+          enableSortcuts={false}
+        />
       </div>
     </section>
   );

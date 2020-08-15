@@ -8,6 +8,7 @@ import JSONTab from "../../storage/JSONTab";
 
 import Plus from "../../components/Icons/Plus";
 import Cross from "../../components/Icons/Cross";
+import KeyboardTrigger from "../../components/KeyboardTrigger";
 import { keyBy } from "../../utils";
 import { isIDBSupported } from "../../storage";
 
@@ -141,9 +142,13 @@ const JSONView = () => {
       <div className="json-tabs">
         <div className="tab-header">
           <h4 className="title">Tabs</h4>
-          <Tippy content="Add a new tab">
-            <Plus className="add-tab" onClick={onClickAddTab} />
-          </Tippy>
+          <KeyboardTrigger
+            triggerKey="n"
+            tooltip="Add a new tab"
+            onClick={onClickAddTab}
+          >
+            <Plus className="add-tab" />
+          </KeyboardTrigger>
         </div>
         <div className="tab-search">
           <input

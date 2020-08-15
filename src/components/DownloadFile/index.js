@@ -1,7 +1,7 @@
 import React from "react";
-import Tippy from "@tippyjs/react";
 
 import Download from "../Icons/Download";
+import KeyboardTrigger from "../KeyboardTrigger";
 
 const createAndDownloadFile = (text) => {
   const element = document.createElement("a");
@@ -20,18 +20,28 @@ const createAndDownloadFile = (text) => {
   document.body.removeChild(element);
 };
 
-const DownloadFile = ({ text, className }) => {
-
+const DownloadFile = ({ text, className, enableSortcuts }) => {
   const onClickDownload = async (event) => {
-    event.stopPropagation();
+    if (event) {
+      event.stopPropagation();
+    }
     createAndDownloadFile(text);
   };
 
   return (
-    <Tippy content="Download">
-      <Download className={className} onClick={onClickDownload} />
-    </Tippy>
+    <KeyboardTrigger
+      enable={enableSortcuts}
+      triggerKey="d"
+      tooltip="Download"
+      onClick={onClickDownload}
+    >
+      <Download className={className} />
+    </KeyboardTrigger>
   );
 };
+
+DownloadFile.defaultProps = {
+  enableSortcuts: true,
+}
 
 export default DownloadFile;

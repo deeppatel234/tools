@@ -1,6 +1,5 @@
 import React, { useState, memo } from "react";
 import classnames from "classnames";
-import Tippy from "@tippyjs/react";
 import { useToasts } from "react-toast-notifications";
 import jsonlint from "jsonlint-mod";
 import { Controlled as CodeMirror } from "react-codemirror2";
@@ -22,6 +21,7 @@ import EditableInput from "../EditableInput";
 import Braces from "../Icons/Braces";
 import JSONTree from "../JSONTree";
 import JsonParser from "../JSONTree/JsonParser";
+import KeyboardTrigger from "../KeyboardTrigger";
 
 import "./index.scss";
 
@@ -52,6 +52,7 @@ const Editor = memo(({
   jsonModeEnabled,
   headerEditable,
   onChangeHeader,
+  enableSortcuts,
   ...props
 }) => {
   const [jsonMode, setJsonMode] = useState(jsonModeEnabled);
@@ -85,7 +86,7 @@ const Editor = memo(({
     } catch (err) {
       addToast("Invalid JSON data", { appearance: "error" });
     }
-  }
+  };
 
   return (
     <div className="editor-wrapper">
@@ -102,40 +103,62 @@ const Editor = memo(({
             <>
               {jsonMode ? (
                 <>
-                  <Tippy content="JSON Formate">
-                    <span className="action-item" onClick={onClickBeautify}>
+                  <KeyboardTrigger
+                    triggerKey="b"
+                    tooltip="JSON Formate"
+                    onClick={onClickBeautify}
+                  >
+                    <span className="action-item">
                       Beautify
                     </span>
-                  </Tippy>
-                  <Tippy content="JSON Minify">
-                    <span className="action-item" onClick={onClickMinify}>
+                  </KeyboardTrigger>
+                  <KeyboardTrigger
+                    triggerKey="m"
+                    tooltip="JSON Minify"
+                    onClick={onClickMinify}
+                  >
+                    <span className="action-item">
                       Minify
                     </span>
-                  </Tippy>
-                  <Tippy content="JSON Tree View">
-                    <Braces
+                  </KeyboardTrigger>
+                  <KeyboardTrigger
+                    triggerKey="t"
+                    tooltip="JSON Tree View"
+                    onClick={toggalTreeView}
+                  >
+                   <Braces
                       className={classnames("action-item", {
                         active: jsonTreeView,
                       })}
-                      onClick={toggalTreeView}
                     />
-                  </Tippy>
+                  </KeyboardTrigger>
                 </>
               ) : null}
               {!jsonModeEnabled ? (
-                <Tippy content="JSON Mode">
+                <KeyboardTrigger
+                  triggerKey="j"
+                  tooltip="JSON Mode"
+                  onClick={toggalJsonMode}
+                >
                   <span
                     className={classnames("action-item", { active: jsonMode })}
-                    onClick={toggalJsonMode}
                   >
                     JSON
                   </span>
-                </Tippy>
+                </KeyboardTrigger>
               ) : null}
             </>
           ) : null}
-          <DownloadFile className="action-item" text={value} />
-          <CopyToClipBoard className="action-item" text={value} />
+          <DownloadFile
+            className="action-item"
+            text={value}
+            enableSortcuts={enableSortcuts}
+          />
+          <CopyToClipBoard
+            enableSortcuts={enableSortcuts}
+            className="action-item"
+            text={value}
+          />
         </div>
       </div>
       {jsonMode ? (
@@ -175,6 +198,7 @@ Editor.defaultProps = {
   jsonEditor: false,
   jsonModeEnabled: false,
   headerEditable: false,
+  enableSortcuts: true,
 };
 
 export default Editor;

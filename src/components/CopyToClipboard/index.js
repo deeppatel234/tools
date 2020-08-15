@@ -1,8 +1,8 @@
 import React from "react";
 import { useToasts } from "react-toast-notifications";
-import Tippy from '@tippyjs/react';
 
 import Clipboard from "../Icons/Clipboard";
+import KeyboardTrigger from "../KeyboardTrigger";
 
 const copyFallback = (text) => {
   return new Promise((resove, reject) => {
@@ -51,11 +51,14 @@ export const copyToClipboardText = async (text) => {
   return copied;
 };
 
-const CopyToClipBoard = ({ text, className }) => {
+const CopyToClipBoard = ({ text, className, enableSortcuts }) => {
   const { addToast } = useToasts();
 
   const onClickCopy = async (event) => {
-    event.stopPropagation();
+    if (event) {
+      event.stopPropagation();
+    }
+
     const copied = await copyToClipboardText(text);
 
     if (copied) {
@@ -68,10 +71,19 @@ const CopyToClipBoard = ({ text, className }) => {
   };
 
   return (
-    <Tippy content="Copy">
-      <Clipboard className={className} onClick={onClickCopy} />
-    </Tippy>
+    <KeyboardTrigger
+      enable={enableSortcuts}
+      triggerKey="c"
+      tooltip="Copy"
+      onClick={onClickCopy}
+    >
+      <Clipboard className={className} />
+    </KeyboardTrigger>
   );
 };
+
+CopyToClipBoard.defaultProps = {
+  enableSortcuts: true,
+}
 
 export default CopyToClipBoard;
