@@ -22,9 +22,16 @@ const JSONView = () => {
   const { addToast } = useToasts();
 
   const fetchData = () => {
-    JSONTab.getAllTabs().then((data) => {
+    return JSONTab.getAllTabs().then((data) => {
       if (Array.isArray(data) && data.length) {
-        setTabs(keyBy(data, "id"));
+        const keyByData = keyBy(data, "id");
+        const keys = Object.keys(keyByData);
+        setTabs(keyByData);
+
+        if (!selectedTabId) {
+          setSelectedTabId(parseInt(keys[0]));
+        }
+        return parseInt(keys[keys.length - 1]);
       } else {
         onClickAddTab();
       }
@@ -38,12 +45,6 @@ const JSONView = () => {
       fetchData();
     }
   }, []);
-
-  useEffect(() => {
-    if (isIDBSupported && !tabs[selectedTabId]) {
-      setSelectedTabId(parseInt(Object.keys(tabs)[0]));
-    }
-  }, [tabs, selectedTabId]);
 
   useEffect(() => {
     if (isIDBSupported && selectedTabId) {
@@ -63,7 +64,9 @@ const JSONView = () => {
   const onClickAddTab = () => {
     JSONTab.add(JSONTab.getInitialData())
       .then(() => {
-        fetchData();
+        fetchData().then(keyAdded => {
+          setSelectedTabId(keyAdded);
+        });
       })
       .catch((err) => {
         addToast("Something went wrong", { appearance: "error" });
@@ -86,12 +89,17 @@ const JSONView = () => {
       });
   };
 
-  const onClickDeleteTab = (id) => {
+  const onClickDeleteTab = (id, event) => {
+    event.stopPropagation();
+    const shouldReset = selectedTabId === id;
     JSONTab.delete(id)
       .then(() => {
         setTabs((oldTabs) => {
           const copyTabs = { ...oldTabs };
           delete copyTabs[id];
+          if (shouldReset) {
+            setSelectedTabId(parseInt(Object.keys(copyTabs)[0]));
+          }
           return copyTabs;
         });
       })
@@ -167,7 +175,7 @@ const JSONView = () => {
                   <Tippy content="Delete tab">
                     <Cross
                       className="delete-tab"
-                      onClick={() => onClickDeleteTab(id)}
+                      onClick={(event) => onClickDeleteTab(id, event)}
                     />
                   </Tippy>
                 ) : null}
