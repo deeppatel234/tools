@@ -10,9 +10,7 @@ import "./index.scss";
 const UploadModal = ({ onDataUpload, children }) => {
   const [isVisible, setModalVisible] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [url, setUrl] = useState(
-    "http://www.mocky.io/v2/5ec3e150300000f8c339c4f2"
-  );
+  const [url, setUrl] = useState();
   const { addToast } = useToasts();
 
   const onCloseModal = () => {
