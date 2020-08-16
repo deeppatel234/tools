@@ -1,0 +1,23 @@
+.upload-modal-body {
+  padding: 0;
+
+  .header {
+    padding: 12px;
+    border-bottom: 1px solid var(--border-color);
+  }
+
+  .body {
+    padding: 12px;
+
+    input {
+      background: transparent;
+      color: #fff;
+      border: none;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      padding: 0.5rem;
+      outline: none;
+      border-radius: 3px;
+      width: 400px;
+    }
+  }
+}

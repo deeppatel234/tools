@@ -22,6 +22,7 @@ import Braces from "../Icons/Braces";
 import JSONTree from "../JSONTree";
 import JsonParser from "../JSONTree/JsonParser";
 import KeyboardTrigger from "../KeyboardTrigger";
+import UploadModal from '../UploadModal';
 
 import "./index.scss";
 
@@ -88,6 +89,10 @@ const Editor = memo(({
     }
   };
 
+  const onDataUpload = text => {
+    onValueChange(text, id);
+  };
+
   return (
     <div className="editor-wrapper">
       <div className="editor-header">
@@ -149,6 +154,11 @@ const Editor = memo(({
               ) : null}
             </>
           ) : null}
+          <UploadModal onDataUpload={onDataUpload}>
+            <span className="action-item">
+              Import
+            </span>
+          </UploadModal>
           <DownloadFile
             className="action-item"
             text={value}
