@@ -60,7 +60,6 @@ const URI = () => {
           value={decodedData}
           onValueChange={onChangeDecoded}
           jsonEditor
-          enableSortcuts={false}
         />
       </div>
     </section>

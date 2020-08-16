@@ -7,7 +7,7 @@ import KeyboardTrigger from "../KeyboardTrigger";
 
 import "./index.scss";
 
-const UploadModal = ({ onDataUpload, children }) => {
+const UploadModal = ({ onDataUpload, children, enableSortcuts }) => {
   const [isVisible, setModalVisible] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [url, setUrl] = useState();
@@ -44,6 +44,7 @@ const UploadModal = ({ onDataUpload, children }) => {
   return (
     <>
       <KeyboardTrigger
+        enable={enableSortcuts}
         triggerKey="i"
         tooltip="Import from URL"
         onClick={onClickImport}

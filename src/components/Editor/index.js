@@ -3,8 +3,8 @@ import classnames from "classnames";
 import { useToasts } from "react-toast-notifications";
 import jsonlint from "jsonlint-mod";
 import { Controlled as CodeMirror } from "react-codemirror2";
-import beautify from 'js-beautify/js/lib/beautify';
-import minify from 'jsonminify';
+import beautify from "js-beautify/js/lib/beautify";
+import minify from "jsonminify";
 
 import "codemirror/mode/javascript/javascript";
 import "codemirror/lib/codemirror.css";
@@ -22,7 +22,7 @@ import Braces from "../Icons/Braces";
 import JSONTree from "../JSONTree";
 import JsonParser from "../JSONTree/JsonParser";
 import KeyboardTrigger from "../KeyboardTrigger";
-import UploadModal from '../UploadModal';
+import UploadModal from "../UploadModal";
 
 import "./index.scss";
 
@@ -44,165 +44,166 @@ const jsonOptions = {
   styleActiveLine: true,
 };
 
-const Editor = memo(({
-  id,
-  title,
-  value,
-  onValueChange,
-  jsonEditor,
-  jsonModeEnabled,
-  headerEditable,
-  onChangeHeader,
-  enableSortcuts,
-  ...props
-}) => {
-  const [jsonMode, setJsonMode] = useState(jsonModeEnabled);
-  const [jsonTreeView, setJsonTreeView] = useState(false);
+const Editor = memo(
+  ({
+    id,
+    title,
+    value,
+    onValueChange,
+    jsonEditor,
+    jsonModeEnabled,
+    headerEditable,
+    onChangeHeader,
+    enableSortcuts,
+    ...props
+  }) => {
+    const [jsonMode, setJsonMode] = useState(jsonModeEnabled);
+    const [jsonTreeView, setJsonTreeView] = useState(false);
 
-  const { addToast } = useToasts();
+    const { addToast } = useToasts();
 
-  const toggalJsonMode = () => {
-    setJsonMode(!jsonMode);
-  };
+    const toggalJsonMode = () => {
+      setJsonMode(!jsonMode);
+    };
 
-  const toggalTreeView = () => {
-    setJsonTreeView(!jsonTreeView);
-  };
+    const toggalTreeView = () => {
+      setJsonTreeView(!jsonTreeView);
+    };
 
-  const onClickBeautify = () => {
-    try {
-      const formated = beautify.js_beautify(value, {
-        indent_with_tabs: true
-      });
-      onValueChange(formated, id);
-    } catch (err) {
-      addToast("Invalid JSON data", { appearance: "error" });
-    }
-  };
+    const onClickBeautify = () => {
+      try {
+        const formated = beautify.js_beautify(value, {
+          indent_with_tabs: true,
+        });
+        onValueChange(formated, id);
+      } catch (err) {
+        addToast("Invalid JSON data", { appearance: "error" });
+      }
+    };
 
-  const onClickMinify = () => {
-    try {
-      const formated = minify(value);
-      onValueChange(formated, id);
-    } catch (err) {
-      addToast("Invalid JSON data", { appearance: "error" });
-    }
-  };
+    const onClickMinify = () => {
+      try {
+        const formated = minify(value);
+        onValueChange(formated, id);
+      } catch (err) {
+        addToast("Invalid JSON data", { appearance: "error" });
+      }
+    };
 
-  const onDataUpload = text => {
-    onValueChange(text, id);
-  };
+    const onDataUpload = (text) => {
+      onValueChange(text, id);
+    };
 
-  return (
-    <div className="editor-wrapper">
-      <div className="editor-header">
-        <h5 className="title">
-          {
-            headerEditable ? (
+    return (
+      <div className="editor-wrapper">
+        <div className="editor-header">
+          <h5 className="title">
+            {headerEditable ? (
               <EditableInput value={title} onChange={onChangeHeader} />
-            ) : title
-          }
-        </h5>
-        <div className="actions">
-          {jsonEditor ? (
-            <>
-              {jsonMode ? (
-                <>
+            ) : (
+              title
+            )}
+          </h5>
+          <div className="actions">
+            {jsonEditor ? (
+              <>
+                {jsonMode ? (
+                  <>
+                    <KeyboardTrigger
+                      triggerKey="b"
+                      tooltip="JSON Formate"
+                      onClick={onClickBeautify}
+                    >
+                      <span className="action-item">Beautify</span>
+                    </KeyboardTrigger>
+                    <KeyboardTrigger
+                      triggerKey="m"
+                      tooltip="JSON Minify"
+                      onClick={onClickMinify}
+                    >
+                      <span className="action-item">Minify</span>
+                    </KeyboardTrigger>
+                    <KeyboardTrigger
+                      triggerKey="t"
+                      tooltip="JSON Tree View"
+                      onClick={toggalTreeView}
+                    >
+                      <Braces
+                        className={classnames("action-item", {
+                          active: jsonTreeView,
+                        })}
+                      />
+                    </KeyboardTrigger>
+                  </>
+                ) : null}
+                {!jsonModeEnabled ? (
                   <KeyboardTrigger
-                    triggerKey="b"
-                    tooltip="JSON Formate"
-                    onClick={onClickBeautify}
+                    triggerKey="j"
+                    tooltip="JSON Mode"
+                    onClick={toggalJsonMode}
                   >
-                    <span className="action-item">
-                      Beautify
-                    </span>
-                  </KeyboardTrigger>
-                  <KeyboardTrigger
-                    triggerKey="m"
-                    tooltip="JSON Minify"
-                    onClick={onClickMinify}
-                  >
-                    <span className="action-item">
-                      Minify
-                    </span>
-                  </KeyboardTrigger>
-                  <KeyboardTrigger
-                    triggerKey="t"
-                    tooltip="JSON Tree View"
-                    onClick={toggalTreeView}
-                  >
-                   <Braces
+                    <span
                       className={classnames("action-item", {
-                        active: jsonTreeView,
+                        active: jsonMode,
                       })}
-                    />
+                    >
+                      JSON
+                    </span>
                   </KeyboardTrigger>
-                </>
-              ) : null}
-              {!jsonModeEnabled ? (
-                <KeyboardTrigger
-                  triggerKey="j"
-                  tooltip="JSON Mode"
-                  onClick={toggalJsonMode}
-                >
-                  <span
-                    className={classnames("action-item", { active: jsonMode })}
-                  >
-                    JSON
-                  </span>
-                </KeyboardTrigger>
-              ) : null}
-            </>
-          ) : null}
-          <UploadModal onDataUpload={onDataUpload}>
-            <span className="action-item">
-              Import
-            </span>
-          </UploadModal>
-          <DownloadFile
-            className="action-item"
-            text={value}
-            enableSortcuts={enableSortcuts}
-          />
-          <CopyToClipBoard
-            enableSortcuts={enableSortcuts}
-            className="action-item"
-            text={value}
-          />
-        </div>
-      </div>
-      {jsonMode ? (
-        <>
-          {jsonTreeView ? (
-            <JsonParser value={value}>
-              {({ data }) => <JSONTree data={data} />}
-            </JsonParser>
-          ) : (
-            <CodeMirror
-              key="json-editor"
-              {...props}
-              options={jsonOptions}
-              value={value}
-              onBeforeChange={(editor, data, value) => {
-                onValueChange(value, id);
-              }}
+                ) : null}
+              </>
+            ) : null}
+            <UploadModal
+              enableSortcuts={enableSortcuts}
+              onDataUpload={onDataUpload}
+            >
+              <span className="action-item">Import</span>
+            </UploadModal>
+            <DownloadFile
+              className="action-item"
+              text={value}
+              enableSortcuts={enableSortcuts}
             />
-          )}
-        </>
-      ) : (
-        <CodeMirror
-          key="text-editor"
-          {...props}
-          options={options}
-          value={value}
-          onBeforeChange={(editor, data, value) => {
-            onValueChange(value, id);
-          }}
-        />
-      )}
-    </div>
-  );
-});
+            <CopyToClipBoard
+              enableSortcuts={enableSortcuts}
+              className="action-item"
+              text={value}
+            />
+          </div>
+        </div>
+        {jsonMode ? (
+          <>
+            {jsonTreeView ? (
+              <JsonParser value={value}>
+                {({ data }) => <JSONTree data={data} />}
+              </JsonParser>
+            ) : (
+              <CodeMirror
+                key="json-editor"
+                {...props}
+                options={jsonOptions}
+                value={value}
+                onBeforeChange={(editor, data, value) => {
+                  onValueChange(value, id);
+                }}
+              />
+            )}
+          </>
+        ) : (
+          <CodeMirror
+            key="text-editor"
+            {...props}
+            options={options}
+            value={value}
+            onBeforeChange={(editor, data, value) => {
+              onValueChange(value, id);
+            }}
+          />
+        )}
+      </div>
+    );
+  }
+);
 
 Editor.defaultProps = {
   jsonEditor: false,
