@@ -1,0 +1,28 @@
+.keyboard-modal-body {
+  padding: 0;
+
+  .header {
+    padding: 12px;
+    border-bottom: 1px solid var(--border-color);
+  }
+
+  .body {
+    padding: 12px;
+    text-align: center;
+
+    .key {
+      border: 1px solid;
+      border-radius: 3px;
+      padding: 0.3rem 0.7rem;
+      margin: 0 0.5rem;
+    }
+
+    p {
+      font-size: 0.9rem;
+    }
+
+    .demo-image {
+      margin-top: 1rem;
+    }
+  }
+}

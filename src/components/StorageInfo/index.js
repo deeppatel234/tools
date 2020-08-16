@@ -35,6 +35,9 @@ const StorageInfo = () => {
         <div className="storage-box">
           <table>
             <tr>
+              <td colSpan="2"><div className="header">Storage Info</div></td>
+            </tr>
+            <tr>
               <td className="title">Usage</td>
               <td className="value">{humanFileSize(info.usage)}</td>
             </tr>
@@ -49,7 +52,6 @@ const StorageInfo = () => {
           </table>
         </div>
       }
-      // visible
     >
       <Storage className="storage-info" />
     </Tippy>

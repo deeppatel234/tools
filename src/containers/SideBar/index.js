@@ -2,6 +2,7 @@ import React from "react";
 import { NavLink } from "react-router-dom";
 
 import StorageInfo from "../../components/StorageInfo";
+import KeyboardInfo from "../../components/KeyboardInfo";
 
 import "./index.scss";
 
@@ -37,6 +38,9 @@ const SideBar = () => {
         })}
       </div>
       <div className="bottom-bar">
+        <div className="bottom-item">
+          <KeyboardInfo />
+        </div>
         <div className="bottom-item">
           <StorageInfo />
         </div>
