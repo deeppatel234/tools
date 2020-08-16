@@ -1,8 +1,15 @@
 aside.sidebar {
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
   background-color: var(--sidebar-bg-color);
   border-right: 1px solid var(--border-color);
+
+  .top-bar, .bottom-bar {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
 
   .menu-item {
     color: inherit;
@@ -16,5 +23,11 @@ aside.sidebar {
     &.active {
       color: var(--primary-color);
     }
+  }
+
+  .bottom-item {
+    font-size: 1.5rem;
+    padding: 0.5rem;
+    cursor: pointer;
   }
 }
