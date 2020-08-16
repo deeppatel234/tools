@@ -62,7 +62,14 @@ class KeyboardTrigger extends React.Component {
 
     return (
       <Tippy placement={placement} content={tooltip}>
-        <Tippy placement={placement} content={triggerKey} visible={showKey}>
+        <Tippy
+          placement={placement}
+          content={triggerKey}
+          visible={showKey}
+          arrow={false}
+          theme="material"
+          className="keyboard-tooltip"
+        >
           {React.cloneElement(children, { onClick })}
         </Tippy>
       </Tippy>
@@ -73,6 +80,6 @@ class KeyboardTrigger extends React.Component {
 KeyboardTrigger.defaultProps = {
   enable: true,
   placement: "bottom",
-}
+};
 
 export default KeyboardTrigger;

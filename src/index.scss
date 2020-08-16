@@ -57,3 +57,10 @@ section.app {
   min-width: 0;
   min-height: 0;
 }
+
+.keyboard-tooltip {
+  line-height: 1;
+  .tippy-content {
+    padding: 5px;
+  }
+}
