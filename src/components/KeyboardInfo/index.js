@@ -9,7 +9,7 @@ import keyboardImage from "./keyboard.png";
 import "./index.scss";
 
 const KeyboardInfo = () => {
-  const [isVisible, setModalVisible] = useState(true);
+  const [isVisible, setModalVisible] = useState(false);
 
   const toggalModal = () => {
     setModalVisible(!isVisible);
