@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import Tippy from "@tippyjs/react";
 import classnames from "classnames";
 import { useToasts } from "react-toast-notifications";
@@ -21,6 +21,10 @@ const JSONView = () => {
   const [searchText, setSearch] = useState("");
   const [isSupported, setIsSupported] = useState(isIDBSupported);
   const { addToast } = useToasts();
+
+  const tabList = useMemo(() => {
+    return Object.values(tabs).reverse();
+  }, [tabs]) ;
 
   const fetchData = () => {
     return JSONTab.getAllTabs().then((data) => {
@@ -134,8 +138,6 @@ const JSONView = () => {
       </section>
     );
   }
-
-  const tabList = Object.values(tabs);
 
   return (
     <section className="app json-app">
